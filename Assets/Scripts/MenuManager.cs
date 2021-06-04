@@ -3,28 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class MenuManager : MonoBehaviour
 {
-    public static MenuManager Instance;
-
-    public string playerName;
+     
+    public Text bestScoreText;
+    public static string playerName;
+    public static string bestPlayer;
     public GameObject inputField;
     public GameObject textDisplay;
+    public static int bestScore = 0;
 
-    private void Awake()//gia na metaferw ta data
+
+    public void Start()
     {
-
-        if (Instance != null)//an yparxei hdh main manager (main -> menu dhmiourgei 2o main manager)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;//otan den yparxei(menu -> main px. thn prwth fora)
-        DontDestroyOnLoad(gameObject);
-
-        
+        ShowBestScore();
     }
 
     public void StoreName()
@@ -37,4 +31,21 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void ShowBestScore()
+    {
+        var path = Application.persistentDataPath + "/bestScore.json";
+        if (File.Exists(path))
+        {
+           
+                string json = File.ReadAllText(path);
+                var data = JsonUtility.FromJson<Save>(json);
+                bestPlayer = data.playerName;
+                bestScore = data.score;
+                bestScoreText.text = "Best Score: " + bestPlayer + " : " + bestScore;
+            
+        }
+    }
+
+          
 }

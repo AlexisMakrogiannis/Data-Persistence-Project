@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class MainManager : MonoBehaviour
 {
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
-    public Text NameText;
+    public Text BestScoreText;
     public Text ScoreText;
     public GameObject GameOverText;
     
     private bool m_Started = false;
     private int m_Points;
-    
+    private bool newBest = false;
     private bool m_GameOver = false;
 
     
@@ -69,18 +70,54 @@ public class MainManager : MonoBehaviour
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
+
+        if(m_Points > MenuManager.bestScore)
+        {
+            newBest = true;
+
+            BestScoreText.text = "Best score by " + MenuManager.bestPlayer + " is: " + MenuManager.bestScore;
+        }
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (newBest == true) SaveBestScore();
     }
 
-    public void BackToMenu()
+     void BackToMenu()
     {
         SceneManager.LoadScene(0);
     }
 
+    void ShowBestScore()
+    {
+        if (MenuManager.bestScore != 0)
+            BestScoreText.text = "Best Score: " + MenuManager.bestPlayer + ": " + MenuManager.bestScore;
+    }
+
+
+
+    void SaveBestScore()
+    {
+        Save data = new Save();
+
+        data.playerName = MenuManager.playerName;
+        data.score = MenuManager.bestScore;
+
+        string json = JsonUtility.ToJson(data);
+        string filePath = Application.persistentDataPath + "/bestScore.json";
+        File.WriteAllText(filePath, json);
+    }
+
     
 }
+
+[System.Serializable]
+    public class Save
+    {
+        public string playerName;
+        public int score;
+    }
