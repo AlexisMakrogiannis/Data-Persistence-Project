@@ -8,7 +8,7 @@ using System.IO;
 public class MenuManager : MonoBehaviour
 {
      
-    public Text bestScoreText;
+    public Text BestScoreText;
     public static string playerName;
     public static string bestPlayer;
     public GameObject inputField;
@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
 
     public void Start()
     {
+        
         ShowBestScore();
     }
 
@@ -27,12 +28,13 @@ public class MenuManager : MonoBehaviour
         textDisplay.GetComponent<Text>().text = "Your name is: " + playerName;
     }
 
-    public void StartNew()
+    private void StartNew()
     {
+        
         SceneManager.LoadScene(1);
     }
 
-    public void ShowBestScore()
+    private void ShowBestScore()
     {
         var path = Application.persistentDataPath + "/bestScore.json";
         if (File.Exists(path))
@@ -42,7 +44,7 @@ public class MenuManager : MonoBehaviour
                 var data = JsonUtility.FromJson<Save>(json);
                 bestPlayer = data.playerName;
                 bestScore = data.score;
-                bestScoreText.text = "Best Score: " + bestPlayer + " : " + bestScore;
+                BestScoreText.text = "Best Score: " + bestPlayer + ": " + bestScore;
             
         }
     }

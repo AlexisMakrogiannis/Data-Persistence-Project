@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd377ecf3f51d64fb568356f2faeca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bestScoreText: {fileID: 0}
+  BestScoreText: {fileID: 707585286}
   inputField: {fileID: 168795223}
   textDisplay: {fileID: 971757484}
 --- !u!1 &1807682612

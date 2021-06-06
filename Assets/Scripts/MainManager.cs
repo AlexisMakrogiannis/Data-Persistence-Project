@@ -10,7 +10,7 @@ public class MainManager : MonoBehaviour
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
-    public Text BestScoreText;
+    public Text bestScoreText;
     public Text ScoreText;
     public GameObject GameOverText;
     
@@ -39,7 +39,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        
+        ShowBestScore();
     }
 
     private void Update()
@@ -74,8 +74,8 @@ public class MainManager : MonoBehaviour
         if(m_Points > MenuManager.bestScore)
         {
             newBest = true;
-
-            BestScoreText.text = "Best score by " + MenuManager.bestPlayer + " is: " + MenuManager.bestScore;
+            MenuManager.bestScore = m_Points;
+            bestScoreText.text = "Best score: " + MenuManager.playerName + ": " + m_Points;
         }
     }
 
@@ -84,23 +84,18 @@ public class MainManager : MonoBehaviour
         m_GameOver = true;
         GameOverText.SetActive(true);
 
-        if (newBest == true) SaveBestScore();
+        if (newBest == true) RenewBestScore();
     }
 
-     void BackToMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
-
-    void ShowBestScore()
+        
+    private void ShowBestScore()
     {
         if (MenuManager.bestScore != 0)
-            BestScoreText.text = "Best Score: " + MenuManager.bestPlayer + ": " + MenuManager.bestScore;
+            bestScoreText.text = "Best Score: " + MenuManager.bestPlayer + ": " + MenuManager.bestScore;
     }
 
 
-
-    void SaveBestScore()
+    void RenewBestScore()
     {
         Save data = new Save();
 
