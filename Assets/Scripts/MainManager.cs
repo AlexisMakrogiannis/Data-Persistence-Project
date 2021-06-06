@@ -110,6 +110,7 @@ public class MainManager : MonoBehaviour
     void BackToMenu()
     {
         SceneManager.LoadScene(0);
+
     }
 
 
