@@ -107,7 +107,12 @@ public class MainManager : MonoBehaviour
         File.WriteAllText(filePath, json);
     }
 
-    
+    void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+
 }
 
 [System.Serializable]
